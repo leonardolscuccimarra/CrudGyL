@@ -26,9 +26,7 @@ public class Producto {
     @Column(nullable = false)
     private Integer stock;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_tipo_producto")
-//    private TipoProducto id_tipo_producto;
-    //
-    //COMENTAR CODIGO ESTA MAL
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_producto")
+    private TipoProducto tipoProducto;
 }
