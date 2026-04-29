@@ -4,6 +4,8 @@ import org.gyl.crudgyl.dto.ProductoRequestDTO;
 import org.gyl.crudgyl.dto.ProductoResponseDTO;
 import org.gyl.crudgyl.entity.Producto;
 
+import java.time.Instant;
+
 public class ProductoMapper {
     private ProductoMapper(){}
 
@@ -12,6 +14,7 @@ public class ProductoMapper {
         producto.setNombre(dto.nombre());
         producto.setPrecio(dto.precio());
         producto.setStock(dto.stock());
+        producto.setTipoProducto(dto.tipoProducto());
         return producto;
     }
 
@@ -20,7 +23,9 @@ public class ProductoMapper {
                 producto.getId(),
                 producto.getNombre(),
                 producto.getPrecio(),
-                producto.getStock()
+                producto.getStock(),
+                producto.getTipoProducto(),
+                producto.getFechaBaja()
         );
     }
 
@@ -28,5 +33,6 @@ public class ProductoMapper {
         producto.setNombre(dto.nombre());
         producto.setPrecio(dto.precio());
         producto.setStock(dto.stock());
+        producto.setTipoProducto(dto.tipoProducto());
     }
 }

@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import org.gyl.crudgyl.entity.TipoProducto;
 
 public record ProductoRequestDTO (
     @NotBlank(message = "El nombre no puede ser vacío")
@@ -15,7 +16,9 @@ public record ProductoRequestDTO (
 
     @NotNull(message = "El stock es obligatorio")
     @Min(value=0, message= "El stock no puede ser negativo")
-    Integer stock
+    Integer stock,
+
+    TipoProducto tipoProducto
 ){
 
 }

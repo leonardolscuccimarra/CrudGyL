@@ -15,9 +15,11 @@ public interface ProductoService {
 
     ProductoResponseDTO actualizar(Long id, ProductoRequestDTO dto);
 
-    void eliminar(Long id);
+    ProductoResponseDTO eliminar(Long id);
 
     void eliminar(Long id, boolean borradoFisico);
+
+    ProductoResponseDTO restaurar(Long id);
 
     ProductoResponseDTO buscarPorID(Long id);
 

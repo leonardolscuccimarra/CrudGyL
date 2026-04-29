@@ -27,8 +27,20 @@ public class ProductoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductoResponseDTO> listar(){
+    public List<ProductoResponseDTO> listarActivos(){
+        return productoService.listar(true);
+    }
+
+    @GetMapping("/todo")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductoResponseDTO> listarTodo(){
         return productoService.listar();
+    }
+
+    @GetMapping("/archivado")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductoResponseDTO> listarArchivados(){
+        return productoService.listar(false);
     }
 
     @PutMapping("/{id}")
@@ -38,10 +50,14 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminar(@Valid @PathVariable Long id){
-        productoService.eliminar(id);
+    @ResponseStatus(HttpStatus.OK)
+    public ProductoResponseDTO eliminar(@Valid @PathVariable Long id){
+        return productoService.eliminar(id);
     }
+
+    @PatchMapping("/restaurar/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductoResponseDTO restaurar(@Valid @PathVariable Long id) { return productoService.restaurar(id); }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

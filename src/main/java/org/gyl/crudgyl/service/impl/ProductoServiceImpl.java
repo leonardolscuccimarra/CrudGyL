@@ -72,7 +72,7 @@ public class ProductoServiceImpl implements ProductoService {
     public ProductoResponseDTO actualizar(Long id, ProductoRequestDTO dto) {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "No se encontró el id" + id
+                        "No se encontró el id: " + id
                 ));
 
         ProductoMapper.updateEntity(producto, dto);
@@ -82,11 +82,16 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public void eliminar(Long id){
-        int actualizados = productoRepository.updateFechaBaja(id, Instant.now());
-        if (actualizados == 0) {
-            throw new RecursoNoEncontradoException("No se encontró el id" + id);
+    public ProductoResponseDTO eliminar(Long id){
+        int columnasEliminadas = productoRepository.updateFechaBaja(id, Instant.now());
+        if (columnasEliminadas == 0) {
+            throw new RecursoNoEncontradoException("No se encontró el id: " + id);
         }
+        Producto eliminado = productoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "Error al recuperar elemento archivado con id: : " + id
+                ));
+        return ProductoMapper.toResponseDTO(eliminado);
     }
 
     @Override
@@ -97,9 +102,22 @@ public class ProductoServiceImpl implements ProductoService {
         }
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "No se encontró el id" + id
+                        "No se encontró el id: " + id
                 ));
 
         productoRepository.delete(producto);
+    }
+
+    @Override
+    public ProductoResponseDTO restaurar(Long id){
+        int columnasRestauradas = productoRepository.updateFechaBaja(id, null);
+        if (columnasRestauradas == 0) {
+            throw new RecursoNoEncontradoException("No se encontró id: "+ id);
+        }
+        Producto restaurado = productoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "Error al recuperar elemento archivado con id: : " + id
+                ));
+        return ProductoMapper.toResponseDTO(restaurado);
     }
 }
