@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
-    private ProductoRepository productoRepository;
+    private final ProductoRepository productoRepository;
 
     public ProductoServiceImpl(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
@@ -83,12 +83,18 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public void eliminar(Long id){
-        productoRepository.updateFechaBaja(id, Instant.now());
+        int actualizados = productoRepository.updateFechaBaja(id, Instant.now());
+        if (actualizados == 0) {
+            throw new RecursoNoEncontradoException("No se encontró el id" + id);
+        }
     }
 
     @Override
     public void eliminar(Long id, boolean borradoFisico) {
-        if (!borradoFisico) {eliminar(id);}
+        if (!borradoFisico) {
+            eliminar(id);
+            return;
+        }
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No se encontró el id" + id
