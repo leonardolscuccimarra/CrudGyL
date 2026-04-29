@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Entity
 @Table(name="productos")
 @Getter
@@ -29,4 +31,7 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "id_tipo_producto")
     private TipoProducto tipoProducto;
+
+    @Column
+    private Instant fechaBaja;
 }

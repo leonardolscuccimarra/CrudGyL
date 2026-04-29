@@ -9,6 +9,7 @@ import org.gyl.crudgyl.repository.ProductoRepository;
 import org.gyl.crudgyl.service.ProductoService;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -16,7 +17,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     private ProductoRepository productoRepository;
 
-    public ProductoServiceImpl(ProductoRepository productoRepository){
+    public ProductoServiceImpl(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
     }
 
@@ -36,6 +37,21 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    public List<ProductoResponseDTO> listar(boolean activo) {
+        return activo ?
+                productoRepository.findByFechaBajaIsNull()
+                .stream()
+                .map(ProductoMapper::toResponseDTO)
+                .toList()
+                :
+                productoRepository.findByFechaBajaIsNotNull()
+                .stream()
+                .map(ProductoMapper::toResponseDTO)
+                .toList();
+    }
+
+
+    @Override
     public ProductoResponseDTO buscarPorID(Long id) {
         return productoRepository.findById(id)
                 .map(ProductoMapper::toResponseDTO)
@@ -45,7 +61,7 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public List<ProductoResponseDTO> buscarPorNombre(String nombre){
+    public List<ProductoResponseDTO> buscarPorNombre(String nombre) {
         return productoRepository.findByNombre(nombre)
                 .stream()
                 .map(ProductoMapper::toResponseDTO)
@@ -53,13 +69,13 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public ProductoResponseDTO actualizar(Long id, ProductoRequestDTO dto){
+    public ProductoResponseDTO actualizar(Long id, ProductoRequestDTO dto) {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No se encontró el id" + id
                 ));
 
-        ProductoMapper.updateEntity(producto,dto);
+        ProductoMapper.updateEntity(producto, dto);
         Producto guardado = productoRepository.save(producto);
         return ProductoMapper.toResponseDTO(guardado);
 
@@ -67,6 +83,12 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public void eliminar(Long id){
+        productoRepository.updateFechaBaja(id, Instant.now());
+    }
+
+    @Override
+    public void eliminar(Long id, boolean borradoFisico) {
+        if (!borradoFisico) {eliminar(id);}
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No se encontró el id" + id

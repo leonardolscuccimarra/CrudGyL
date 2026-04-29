@@ -11,9 +11,13 @@ public interface ProductoService {
 
     List<ProductoResponseDTO> listar();
 
+    List<ProductoResponseDTO> listar(boolean activo);
+
     ProductoResponseDTO actualizar(Long id, ProductoRequestDTO dto);
 
     void eliminar(Long id);
+
+    void eliminar(Long id, boolean borradoFisico);
 
     ProductoResponseDTO buscarPorID(Long id);
 

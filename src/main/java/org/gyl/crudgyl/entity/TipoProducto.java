@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Entity
 @Table(name="tipos_producto")
 @Getter
@@ -22,4 +24,7 @@ public class TipoProducto {
 
     @Column(nullable = false)
     private String descripcion;
+
+    @Column
+    private Instant fechaBaja;
 }
