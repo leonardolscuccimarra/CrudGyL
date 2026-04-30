@@ -22,6 +22,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
     @Modifying
     @Transactional
-    @Query("update Producto p set p.fechaBaja = :fecha where p.id = :id")
+    @Query("update Producto p set p.fechaBaja = :fecha where p.id_cliente = :id")
     int updateFechaBaja(@Param("id") Long id, @Param("fecha") Instant fecha);
 }

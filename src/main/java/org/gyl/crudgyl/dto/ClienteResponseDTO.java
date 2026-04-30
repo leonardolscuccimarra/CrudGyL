@@ -6,6 +6,6 @@ public record ClienteResponseDTO(
         String apellido,
         String correo,
         String telefono,
-        String direccion
-) {
+        String direccion,
+        java.time.Instant fechaBaja) {
 }

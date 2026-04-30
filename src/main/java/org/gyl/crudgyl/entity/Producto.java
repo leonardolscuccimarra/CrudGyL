@@ -17,7 +17,7 @@ import java.time.Instant;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long id_producto;
 
     @Column(nullable = false, length = 100)
     private String nombre;

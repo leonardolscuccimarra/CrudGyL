@@ -28,8 +28,21 @@ public class ClienteController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ClienteResponseDTO> listar(){
+        return clienteService.listar(true);
+    }
+
+    @GetMapping("/todo")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ClienteResponseDTO> listarTodo(){
         return clienteService.listar();
     }
+
+    @GetMapping("/archivado")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ClienteResponseDTO> listarArchivados(){
+        return clienteService.listar(false);
+    }
+
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -42,6 +55,10 @@ public class ClienteController {
     public void eliminar(@Valid @PathVariable Long id){
         clienteService.eliminar(id);
     }
+
+    @PatchMapping("/restaurar/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClienteResponseDTO restaurar(@Valid @PathVariable Long id) { return clienteService.restaurar(id); }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

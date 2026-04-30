@@ -11,9 +11,15 @@ public interface ClienteService {
 
     List<ClienteResponseDTO> listar();
 
+    List<ClienteResponseDTO> listar(boolean activo);
+
     ClienteResponseDTO actualizar(Long id, ClienteRequestDTO dto);
 
-    void eliminar(Long id);
+    ClienteResponseDTO eliminar(Long id);
+
+    void eliminar(Long id, boolean borradoFisico);
+
+    ClienteResponseDTO restaurar(Long id);
 
     ClienteResponseDTO buscarPorID(Long id);
 

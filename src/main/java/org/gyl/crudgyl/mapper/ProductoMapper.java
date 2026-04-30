@@ -4,8 +4,6 @@ import org.gyl.crudgyl.dto.ProductoRequestDTO;
 import org.gyl.crudgyl.dto.ProductoResponseDTO;
 import org.gyl.crudgyl.entity.Producto;
 
-import java.time.Instant;
-
 public class ProductoMapper {
     private ProductoMapper(){}
 
@@ -20,7 +18,7 @@ public class ProductoMapper {
 
     public static ProductoResponseDTO toResponseDTO(Producto producto){
         return new ProductoResponseDTO(
-                producto.getId(),
+                producto.getId_producto(),
                 producto.getNombre(),
                 producto.getPrecio(),
                 producto.getStock(),
