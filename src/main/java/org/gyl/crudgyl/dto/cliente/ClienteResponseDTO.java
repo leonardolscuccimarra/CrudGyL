@@ -1,4 +1,6 @@
-package org.gyl.crudgyl.dto;
+package org.gyl.crudgyl.dto.cliente;
+
+import java.time.Instant;
 
 public record ClienteResponseDTO(
         long id,
@@ -7,5 +9,5 @@ public record ClienteResponseDTO(
         String correo,
         String telefono,
         String direccion,
-        java.time.Instant fechaBaja) {
+        Instant fechaBaja) {
 }

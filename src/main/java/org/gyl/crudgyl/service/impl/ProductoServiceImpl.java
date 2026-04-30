@@ -1,11 +1,13 @@
 package org.gyl.crudgyl.service.impl;
 
-import org.gyl.crudgyl.dto.ProductoRequestDTO;
-import org.gyl.crudgyl.dto.ProductoResponseDTO;
+import org.gyl.crudgyl.dto.producto.ProductoRequestDTO;
+import org.gyl.crudgyl.dto.producto.ProductoResponseDTO;
 import org.gyl.crudgyl.entity.Producto;
+import org.gyl.crudgyl.entity.TipoProducto;
 import org.gyl.crudgyl.exception.RecursoNoEncontradoException;
 import org.gyl.crudgyl.mapper.ProductoMapper;
 import org.gyl.crudgyl.repository.ProductoRepository;
+import org.gyl.crudgyl.repository.TipoProductoRepository;
 import org.gyl.crudgyl.service.ProductoService;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,11 @@ import java.util.List;
 public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoRepository productoRepository;
+    private final TipoProductoRepository tipoProductoRepository;
 
-    public ProductoServiceImpl(ProductoRepository productoRepository) {
+    public ProductoServiceImpl(ProductoRepository productoRepository, TipoProductoRepository tipoProductoRepository) {
         this.productoRepository = productoRepository;
+        this.tipoProductoRepository = tipoProductoRepository;
     }
 
     @Override
@@ -63,6 +67,17 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public List<ProductoResponseDTO> buscarPorNombre(String nombre) {
         return productoRepository.findByNombre(nombre)
+                .stream()
+                .map(ProductoMapper::toResponseDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ProductoResponseDTO> buscarPorTipo(Long idTipo){
+        TipoProducto tipo = tipoProductoRepository.findById(idTipo)
+                .orElseThrow(() -> new RecursoNoEncontradoException("No se encontró tipo de producto con ID: " + idTipo));
+
+        return productoRepository.findByTipoProducto(tipo)
                 .stream()
                 .map(ProductoMapper::toResponseDTO)
                 .toList();
@@ -117,5 +132,20 @@ public class ProductoServiceImpl implements ProductoService {
                         "Error al recuperar elemento restaurado con ID: : " + id
                 ));
         return ProductoMapper.toResponseDTO(restaurado);
+    }
+
+    @Override
+    public ProductoResponseDTO asignarTipo(Long id, Long idTipo){
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException(id));
+
+        if (idTipo != null) {
+            TipoProducto tipoProducto = tipoProductoRepository.findById(idTipo)
+                    .orElseThrow(() -> new RecursoNoEncontradoException("No se encontró tipo de producto con ID: " + idTipo));
+
+            producto.setTipoProducto(tipoProducto);
+        } else {producto.setTipoProducto(null);}
+        Producto actualizado = productoRepository.save(producto);
+        return ProductoMapper.toResponseDTO(actualizado);
     }
 }

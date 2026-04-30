@@ -1,6 +1,5 @@
 package org.gyl.crudgyl.repository;
 
-import org.gyl.crudgyl.entity.Producto;
 import org.gyl.crudgyl.entity.TipoProducto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,17 +12,14 @@ import java.time.Instant;
 import java.util.List;
 
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto, Long> {
+public interface TipoProductoRepository extends JpaRepository<TipoProducto, Long> {
 
-    List<Producto> findByNombre(String nombre);
-    List<Producto> findByStock(Integer stock);
-    List<Producto> findByPrecio(Double precio);
-    List<Producto> findByFechaBajaIsNull();
-    List<Producto> findByFechaBajaIsNotNull();
-    List<Producto> findByTipoProducto(TipoProducto tipo);
+    List<TipoProducto> findByNombre(String nombre);
+    List<TipoProducto> findByFechaBajaIsNull();
+    List<TipoProducto> findByFechaBajaIsNotNull();
 
     @Modifying
     @Transactional
-    @Query("update Producto p set p.fechaBaja = :fecha where p.id_producto = :id")
+    @Query("update TipoProducto t set t.fechaBaja = :fecha where t.id_tipo_producto = :id")
     int updateFechaBaja(@Param("id") Long id, @Param("fecha") Instant fecha);
 }

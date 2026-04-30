@@ -1,12 +1,6 @@
-package org.gyl.crudgyl.dto;
+package org.gyl.crudgyl.dto.cliente;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import org.gyl.crudgyl.entity.TipoProducto;
-
-import java.util.List;
 
 public record ClienteRequestDTO(
     @NotBlank(message = "El nombre no puede estar vacío")

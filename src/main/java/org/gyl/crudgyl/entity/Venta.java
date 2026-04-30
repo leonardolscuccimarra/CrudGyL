@@ -10,25 +10,29 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name="tipos_producto")
+@Table(name="ventas")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoProducto {
+public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id_tipo_producto;
+    private long id_venta;
 
-    @Column(nullable = false, length = 100)
-    private String nombre;
+    @Column
+    private Instant fechaVenta;
 
     @Column(nullable = false)
-    private String descripcion;
+    private double total;
 
     @Column
     private Instant fechaBaja;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoProducto")
-    private List<Producto> productos;
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente comprador;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "venta", cascade = CascadeType.ALL)
+    private List<DetalleVenta> detalles;
 }

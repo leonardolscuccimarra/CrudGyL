@@ -1,8 +1,8 @@
 package org.gyl.crudgyl.controller;
 
 import jakarta.validation.Valid;
-import org.gyl.crudgyl.dto.ProductoRequestDTO;
-import org.gyl.crudgyl.dto.ProductoResponseDTO;
+import org.gyl.crudgyl.dto.producto.ProductoRequestDTO;
+import org.gyl.crudgyl.dto.producto.ProductoResponseDTO;
 import org.gyl.crudgyl.service.ProductoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -69,5 +69,17 @@ public class ProductoController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProductoResponseDTO> buscarPorNombre(@Valid @PathVariable String nombre){
         return productoService.buscarPorNombre(nombre);
+    }
+
+    @PutMapping("/{id}/tipo/{idTipo}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductoResponseDTO asignarTipo(@Valid @PathVariable Long id, @Valid @PathVariable Long idTipo){
+        return productoService.asignarTipo(id,idTipo);
+    }
+
+    @DeleteMapping("/{id}/tipo")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductoResponseDTO eliminarTipo(@Valid @PathVariable Long id){
+        return productoService.asignarTipo(id,null);
     }
 }

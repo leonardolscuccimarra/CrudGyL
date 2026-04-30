@@ -1,8 +1,8 @@
 package org.gyl.crudgyl.controller;
 
 import jakarta.validation.Valid;
-import org.gyl.crudgyl.dto.ClienteRequestDTO;
-import org.gyl.crudgyl.dto.ClienteResponseDTO;
+import org.gyl.crudgyl.dto.cliente.ClienteRequestDTO;
+import org.gyl.crudgyl.dto.cliente.ClienteResponseDTO;
 import org.gyl.crudgyl.service.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

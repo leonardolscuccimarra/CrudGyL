@@ -1,7 +1,7 @@
 package org.gyl.crudgyl.service;
 
-import org.gyl.crudgyl.dto.ProductoRequestDTO;
-import org.gyl.crudgyl.dto.ProductoResponseDTO;
+import org.gyl.crudgyl.dto.producto.ProductoRequestDTO;
+import org.gyl.crudgyl.dto.producto.ProductoResponseDTO;
 
 import java.util.List;
 
@@ -25,5 +25,7 @@ public interface ProductoService {
 
     List<ProductoResponseDTO> buscarPorNombre(String nombre);
 
+    ProductoResponseDTO asignarTipo(Long id, Long idTipo);
 
+    List<ProductoResponseDTO> buscarPorTipo(Long idTipo);
 }

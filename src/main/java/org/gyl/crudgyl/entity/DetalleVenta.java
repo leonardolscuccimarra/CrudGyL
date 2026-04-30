@@ -7,28 +7,32 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.List;
 
 @Entity
-@Table(name="tipos_producto")
+@Table(name="detalles_venta")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoProducto {
+public class DetalleVenta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id_tipo_producto;
-
-    @Column(nullable = false, length = 100)
-    private String nombre;
+    private long id_detalle_venta;
 
     @Column(nullable = false)
-    private String descripcion;
+    private long cantidad;
+
+    @Column(nullable = false)
+    private double precio_unitario;
 
     @Column
     private Instant fechaBaja;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoProducto")
-    private List<Producto> productos;
+    @ManyToOne
+    @JoinColumn(name = "id_venta")
+    private Venta venta;
+
+    @ManyToOne
+    @JoinColumn(name = "id_producto")
+    private Producto producto;
 }
