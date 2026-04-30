@@ -1,6 +1,5 @@
 package org.gyl.crudgyl.service;
 
-import org.gyl.crudgyl.dto.producto.ProductoResponseDTO;
 import org.gyl.crudgyl.dto.tipoProducto.TipoProductoRequestDTO;
 import org.gyl.crudgyl.dto.tipoProducto.TipoProductoResponseDTO;
 

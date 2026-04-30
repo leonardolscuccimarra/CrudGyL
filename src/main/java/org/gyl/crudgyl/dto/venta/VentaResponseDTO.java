@@ -2,7 +2,6 @@ package org.gyl.crudgyl.dto.venta;
 
 import org.gyl.crudgyl.dto.cliente.ClienteResponseDTO;
 import org.gyl.crudgyl.dto.tipoProducto.TipoProductoResponseDTO;
-import org.gyl.crudgyl.entity.TipoProducto;
 
 import java.time.Instant;
 

@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.gyl.crudgyl.dto.tipoProducto.TipoProductoRequestDTO;
-import org.gyl.crudgyl.dto.tipoProducto.TipoProductoResponseDTO;
-import org.gyl.crudgyl.entity.TipoProducto;
 
 public record DetalleVentaRequestDTO(
     @NotBlank(message = "El nombre no puede ser vacío")
