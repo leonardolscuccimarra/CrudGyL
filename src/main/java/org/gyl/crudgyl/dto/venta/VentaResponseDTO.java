@@ -1,16 +1,19 @@
 package org.gyl.crudgyl.dto.venta;
 
-import org.gyl.crudgyl.dto.cliente.ClienteResponseDTO;
-import org.gyl.crudgyl.dto.tipoProducto.TipoProductoResponseDTO;
+
+
+import org.gyl.crudgyl.entity.Cliente;
+import org.gyl.crudgyl.entity.DetalleVenta;
 
 import java.time.Instant;
+import java.util.List;
 
 public record VentaResponseDTO(
         long id,
         Instant fechaVenta,
         double total,
-        ClienteResponseDTO comprador,
-        TipoProductoResponseDTO tipoProducto,
+        Cliente comprador,
+        List<DetalleVenta> detalleVentas,
         Instant fechaBaja
 ) {
 }

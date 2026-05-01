@@ -3,7 +3,7 @@ package org.gyl.crudgyl.service.impl;
 import org.gyl.crudgyl.dto.cliente.ClienteRequestDTO;
 import org.gyl.crudgyl.dto.cliente.ClienteResponseDTO;
 import org.gyl.crudgyl.entity.Cliente;
-import org.gyl.crudgyl.exception.ClaveUnicaRepetida;
+import org.gyl.crudgyl.exception.ClaveUnicaRepetidaException;
 import org.gyl.crudgyl.exception.RecursoNoEncontradoException;
 import org.gyl.crudgyl.mapper.ClienteMapper;
 import org.gyl.crudgyl.repository.ClienteRepository;
@@ -25,7 +25,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteResponseDTO crear(ClienteRequestDTO dto) {
         if (clienteRepository.existsByCorreo(dto.correo())) {
-            throw new ClaveUnicaRepetida("Ya existe un cliente con el correo: " + dto.correo());
+            throw new ClaveUnicaRepetidaException("Ya existe un cliente con el correo: " + dto.correo());
         }
             Cliente cliente = ClienteMapper.toEntity(dto);
         Cliente guardado = clienteRepository.save(cliente);
@@ -105,7 +105,7 @@ public class ClienteServiceImpl implements ClienteService {
                 .orElseThrow(() -> new RecursoNoEncontradoException(id));
 
         if (clienteRepository.existsByCorreo(dto.correo())) {
-            throw new ClaveUnicaRepetida("Ya existe un cliente con el correo: " + dto.correo());
+            throw new ClaveUnicaRepetidaException("Ya existe un cliente con el correo: " + dto.correo());
         }
 
         ClienteMapper.updateEntity(cliente,dto);

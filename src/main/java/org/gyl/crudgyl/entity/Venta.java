@@ -35,4 +35,12 @@ public class Venta {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "venta", cascade = CascadeType.ALL)
     private List<DetalleVenta> detalles;
+
+    public boolean agregarDetalle(DetalleVenta detalle){
+        return this.detalles.add(detalle);
+    }
+
+    public boolean borrarDetalle(DetalleVenta detalle){
+        return this.detalles.remove(detalle);
+    }
 }
