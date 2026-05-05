@@ -33,7 +33,11 @@ public class Venta {
     @JoinColumn(name = "id_cliente")
     private Cliente comprador;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "venta", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "venta", cascade = {CascadeType.PERSIST
+            , CascadeType.MERGE
+            , CascadeType.REFRESH
+            , CascadeType.DETACH
+    })
     private List<DetalleVenta> detalles;
 
     public boolean agregarDetalle(DetalleVenta detalle){

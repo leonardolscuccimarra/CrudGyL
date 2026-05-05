@@ -24,9 +24,6 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponseDTO crear(ClienteRequestDTO dto) {
-        if (clienteRepository.existsByCorreo(dto.correo())) {
-            throw new ClaveUnicaRepetidaException("Ya existe un cliente con el correo: " + dto.correo());
-        }
             Cliente cliente = ClienteMapper.toEntity(dto);
         Cliente guardado = clienteRepository.save(cliente);
         return ClienteMapper.toResponseDTO(guardado);

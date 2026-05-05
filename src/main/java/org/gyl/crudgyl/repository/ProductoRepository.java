@@ -1,5 +1,7 @@
 package org.gyl.crudgyl.repository;
 
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import org.gyl.crudgyl.entity.Producto;
 import org.gyl.crudgyl.entity.TipoProducto;
 import org.springframework.data.jpa.repository.JpaRepository;
