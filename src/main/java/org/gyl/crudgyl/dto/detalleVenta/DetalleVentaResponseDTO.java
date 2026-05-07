@@ -1,6 +1,6 @@
 package org.gyl.crudgyl.dto.detalleVenta;
 
-import org.gyl.crudgyl.dto.tipoProducto.TipoProductoResponseDTO;
+import org.gyl.crudgyl.dto.producto.ProductoResponseDTO;
 import org.gyl.crudgyl.entity.Producto;
 import org.gyl.crudgyl.entity.Venta;
 
@@ -11,8 +11,7 @@ public record DetalleVentaResponseDTO(
         long cantidad,
         double precio_unitario,
         double subtotal,
-        Venta venta,
-        Producto producto,
+        ProductoResponseDTO producto,
         Instant fechaBaja
 ) {
 }

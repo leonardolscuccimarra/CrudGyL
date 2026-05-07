@@ -2,6 +2,7 @@ package org.gyl.crudgyl.dto.venta;
 
 
 
+import org.gyl.crudgyl.dto.detalleVenta.DetalleVentaResponseDTO;
 import org.gyl.crudgyl.entity.Cliente;
 import org.gyl.crudgyl.entity.DetalleVenta;
 
@@ -13,7 +14,7 @@ public record VentaResponseDTO(
         Instant fechaVenta,
         double total,
         Cliente comprador,
-        List<DetalleVenta> detalleVentas,
+        List<DetalleVentaResponseDTO> detalleVentas,
         Instant fechaBaja
 ) {
 }

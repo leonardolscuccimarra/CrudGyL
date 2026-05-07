@@ -38,7 +38,7 @@ public class VentaServiceImpl implements VentaService {
 
     @Override
     public VentaResponseDTO crear(VentaRequestDTO dto) {
-        Venta venta = VentaMapper.toEntity(dto);
+        Venta venta = VentaMapper.toEntity(dto, clienteRepository, detalleVentaRepository);
         Venta guardado = ventaRepository.save(venta);
         return VentaMapper.toResponseDTO(guardado);
     }
@@ -82,7 +82,7 @@ public class VentaServiceImpl implements VentaService {
                         id
                 ));
 
-        VentaMapper.updateEntity(venta, dto);
+        VentaMapper.updateEntity(venta, dto, clienteRepository, detalleVentaRepository);
         Venta guardado = ventaRepository.save(venta);
         return VentaMapper.toResponseDTO(guardado);
 
@@ -181,18 +181,14 @@ public class VentaServiceImpl implements VentaService {
                 ));
 
         if (!venta.agregarDetalle(detalle)) {throw new RecursoNoProcesableException(id);}
+        ventaRepository.save(venta);
         return VentaMapper.toResponseDTO(venta);
     }
 
     @Override
     public VentaResponseDTO generarYCargarDetalle(Long idVenta, Long idProducto){
-        generarDetalle(idVenta,idProducto);
-        Venta venta = ventaRepository.findById(idVenta)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "No se encuentra venta con id: " + idVenta
-                ));
-
-        return VentaMapper.toResponseDTO(venta);
+        DetalleVenta detalle = generarDetalle(idVenta,idProducto);
+        return cargarDetalle(idVenta, detalle);
     }
 
     @Override

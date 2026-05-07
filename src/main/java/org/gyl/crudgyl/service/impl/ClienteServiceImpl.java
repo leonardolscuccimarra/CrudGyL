@@ -127,6 +127,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public void eliminar(Long id, boolean borradoFisico){
+        if (!borradoFisico){eliminar(id);}
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(id));
 

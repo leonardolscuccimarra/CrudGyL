@@ -4,6 +4,9 @@ import org.gyl.crudgyl.dto.venta.VentaRequestDTO;
 import org.gyl.crudgyl.dto.venta.VentaResponseDTO;
 import org.gyl.crudgyl.entity.DetalleVenta;
 import org.gyl.crudgyl.entity.Venta;
+import org.gyl.crudgyl.exception.RecursoNoEncontradoException;
+import org.gyl.crudgyl.repository.ClienteRepository;
+import org.gyl.crudgyl.repository.DetalleVentaRepository;
 
 import java.time.Instant;
 import java.util.List;
@@ -11,13 +14,17 @@ import java.util.List;
 public class VentaMapper {
     private VentaMapper(){}
 
-    public static Venta toEntity(VentaRequestDTO dto){
+    public static Venta toEntity(VentaRequestDTO dto, ClienteRepository clienteRepository, DetalleVentaRepository detalleVentaRepository){
         Venta venta = new Venta();
         venta.setFechaVenta(Instant.now());
-        venta.setComprador(dto.comprador());
-        venta.setDetalles(dto.detalles());
+        venta.setComprador(clienteRepository.findById(dto.comprador())
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "No existe cliente con id: "+ dto.comprador())));
 
-        venta.setTotal(contarSubtotales(dto.detalles()));
+        if (!dto.id_detalles().isEmpty()) {
+            venta.setDetalles(detalleVentaRepository.findAllById(dto.id_detalles()));
+            venta.setTotal(contarSubtotales(venta.getDetalles()));
+        }
         return venta;
     }
 
@@ -27,17 +34,22 @@ public class VentaMapper {
                 venta.getFechaVenta(),
                 venta.getTotal(),
                 venta.getComprador(),
-                venta.getDetalles(),
+                venta.getDetalles()
+                        .stream()
+                        .map(DetalleVentaMapper::toResponseDTO)
+                        .toList(),
                 venta.getFechaBaja()
         );
     }
 
-    public static void updateEntity(Venta venta, VentaRequestDTO dto){
+    public static void updateEntity(Venta venta, VentaRequestDTO dto,ClienteRepository clienteRepository, DetalleVentaRepository detalleVentaRepository){
         venta.setFechaVenta(Instant.now());
-        venta.setComprador(dto.comprador());
-        venta.setDetalles(dto.detalles());
+        venta.setComprador(clienteRepository.findById(dto.comprador())
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "No existe cliente con id: "+ dto.comprador())));
+        venta.setDetalles(detalleVentaRepository.findAllById(dto.id_detalles()));
 
-        venta.setTotal(contarSubtotales(dto.detalles()));
+        venta.setTotal(contarSubtotales(venta.getDetalles()));
     }
 
     private static double contarSubtotales(List<DetalleVenta> detalles){

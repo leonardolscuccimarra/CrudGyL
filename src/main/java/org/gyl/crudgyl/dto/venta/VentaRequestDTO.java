@@ -8,9 +8,9 @@ import java.util.List;
 
 public record VentaRequestDTO(
     @NotNull(message = "El comprador no puede ser nulo")
-    Cliente comprador,
+    Long comprador,
 
-    List<DetalleVenta> detalles
+    List<Long> id_detalles
 ){
 
 }

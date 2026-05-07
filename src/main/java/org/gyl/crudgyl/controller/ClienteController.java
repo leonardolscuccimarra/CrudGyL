@@ -51,9 +51,9 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminar(@Valid @PathVariable Long id){
-        clienteService.eliminar(id);
+    @ResponseStatus(HttpStatus.OK)
+    public ClienteResponseDTO eliminar(@Valid @PathVariable Long id){
+        return clienteService.eliminar(id);
     }
 
     @PatchMapping("/restaurar/{id}")
@@ -95,4 +95,6 @@ public class ClienteController {
     public List<ClienteResponseDTO> buscarPorDireccion(@Valid @PathVariable String valor){
         return clienteService.buscarPorDireccion(valor);
     }
+
+
 }
